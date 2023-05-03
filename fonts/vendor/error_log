@@ -1,0 +1,11 @@
+[08-Mar-2023 18:22:10 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '>' in /home/project3/public_html/stay_bindass/vendor/manage_listing.php on line 231
+[08-Mar-2023 18:22:12 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '>' in /home/project3/public_html/stay_bindass/vendor/manage_listing.php on line 231
+[08-Mar-2023 18:22:13 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '>' in /home/project3/public_html/stay_bindass/vendor/manage_listing.php on line 231
+[08-Mar-2023 18:22:14 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '>' in /home/project3/public_html/stay_bindass/vendor/manage_listing.php on line 231
+[08-Mar-2023 18:26:55 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '<' in /home/project3/public_html/stay_bindass/vendor/manage_listing.php on line 242
+[08-Mar-2023 18:26:57 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '<' in /home/project3/public_html/stay_bindass/vendor/manage_listing.php on line 242
+[08-Mar-2023 18:28:37 Asia/Kolkata] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/project3/public_html/stay_bindass/vendor/module/addproperty.php on line 767
+[08-Mar-2023 18:29:09 Asia/Kolkata] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/project3/public_html/stay_bindass/vendor/ajax_function.php on line 111
+[08-Mar-2023 18:29:09 Asia/Kolkata] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, null given in /home/project3/public_html/stay_bindass/vendor/ajax_function.php on line 113
+[08-Mar-2023 18:29:22 Asia/Kolkata] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, null given in /home/project3/public_html/stay_bindass/vendor/ajax_function.php on line 111
+[08-Mar-2023 18:29:22 Asia/Kolkata] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, null given in /home/project3/public_html/stay_bindass/vendor/ajax_function.php on line 113

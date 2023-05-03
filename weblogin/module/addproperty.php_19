@@ -1,0 +1,803 @@
+<?php
+$latitude = '';
+$video_link = '';
+$longitude = '';
+$serviceCharges = '';
+$minguest = '';
+$maxguest ='';
+$nights = '';
+$pool = '';
+$destination = '';
+$propcat = '';
+$amenities = '';
+$title = '';
+$actualtitle = '';
+$slug = '';
+$villaQuantity ='';
+$state = 0;
+$city = 0;
+$address = '';
+$r_type ='';
+$h_type ='';
+$guestname = '';
+$nightname ='';
+$poolname = '';
+$destinationname = '';
+$prop_cat = '';
+$amenities_name = '';
+$home_type = '';
+$room_type = '';
+$property = '';
+$vendor = '';
+$overview = '';
+$seo_title = '';
+$seo_keyword = '';
+$seo_desc = '';
+$location_link = '';
+$rules = '';
+$security = '';
+$policies = '';
+$shortdesc = '';
+$image = '';
+$eid = '';
+$idsarray = '';
+$search_offer = '';
+$search_disable = '';
+$path = "../upload/property_thumbnail/";
+$valid_formats = array("jpg", "png", "gif", "bmp", "jpeg", "JPG", "PNG", "GIF", "BMP", "JPEG", "webp", "WEBP");
+
+if(isset($_GET['search_vendorname'])){$search_vendorname=$_GET['search_vendorname'];}
+if(isset($_GET['search_destination'])){$search_destination=$_GET['search_destination'];}
+if(isset($_GET['search_offer'])){$search_offer=$_GET['search_offer'];}
+if(isset($_GET['search_state'])){$search_state=$_GET['search_state'];}
+if(isset($_GET['search_city'])){$search_city=$_GET['search_city'];}
+if(isset($_GET['search_disable'])){$search_disable=$_GET['search_disable'];}
+if(isset($_GET['vendorID'])){$vid=$_GET['vendorID'];
+    $vendorID=$_GET['vendorID'];}
+
+$cdate = date('Y-m-d H:i:s');
+
+if (isset($_POST['submit'])) {
+
+    $title = trim($_POST['title']);
+    $title = mysqli_real_escape_string($sql, $title);
+
+    $actualtitle = trim($_POST['actualtitle']);
+    $actualtitle = mysqli_real_escape_string($sql, $actualtitle);
+
+    $slug = trim($_POST['slug']);
+    $slug = mysqli_real_escape_string($sql, $slug);
+
+    $state = trim($_POST['state']);
+    $state = mysqli_real_escape_string($sql, $state);
+
+    $city = trim($_POST['city']);
+    $city = mysqli_real_escape_string($sql, $city);
+    if($city==''){ $city=0; }
+
+    $address = trim($_POST['address']);
+    $address = mysqli_real_escape_string($sql, $address);
+    $address = htmlentities($address);
+
+
+
+    $home_type = trim($_POST['home_type']);
+    $home_type = mysqli_real_escape_string($sql, $home_type);
+
+    $room_type = trim($_POST['room_type']);
+    $room_type = mysqli_real_escape_string($sql, $room_type);
+
+    $minguest = trim($_POST['minguest']);
+    $minguest = mysqli_real_escape_string($sql, $minguest);
+
+    $maxguest = trim($_POST['maxguest']);
+    $maxguest = mysqli_real_escape_string($sql, $maxguest);
+
+    $serviceCharges = trim($_POST['serviceCharges']);
+    $serviceCharges = mysqli_real_escape_string($sql, $serviceCharges);
+
+
+    $nights = trim($_POST['nights']);
+    $nights = mysqli_real_escape_string($sql, $nights);
+
+    $pool = trim($_POST['pool']);
+    $pool = mysqli_real_escape_string($sql, $pool);
+
+    $destination = trim($_POST['destination']);
+    $destination = mysqli_real_escape_string($sql, $destination);
+
+    $propcatlist = $_POST['propcat'];
+    $propcat = '';
+    $propcat_ids = '';
+    foreach ($propcatlist as $propcatnamelist) {
+        if ($propcat == '') {
+            $propcat = $propcatnamelist;
+        } else {
+            $propcat = $propcat . ',' . $propcatnamelist;
+        }
+
+    }
+
+    foreach ($propcatlist as $propcat_name) {
+        $query_id = mysqli_query($sql,"SELECT `id` from `awt_filters` where `title`='$propcat_name'");
+        $get_dataids = mysqli_fetch_object($query_id);
+        $filter_id = $get_dataids->id;
+        if ($propcat_ids == '') {
+            $propcat_ids = $filter_id;
+        } else {
+            $propcat_ids = $propcat_ids . ',' . $filter_id;
+        }
+
+    }
+
+    $amenitieslist = $_POST['amenities'];
+    $amenities = '';
+    foreach ($amenitieslist as $amenitiesnamelist) {
+        if ($amenities == '') {
+            $amenities = $amenitiesnamelist;
+        } else {
+            $amenities = $amenities . ',' . $amenitiesnamelist;
+        }
+
+    }
+
+    $villaQuantity = trim($_POST['villaQuantity']);
+    $villaQuantity = mysqli_real_escape_string($sql, $villaQuantity);
+
+    $overview = trim($_POST['overview']);
+    $overview = mysqli_real_escape_string($sql, $overview);
+    $overview = htmlentities($overview);
+
+
+    $seo_title = trim($_POST['seo_title']);
+    $seo_title = mysqli_real_escape_string($sql, $seo_title);
+    $seo_title = htmlentities($seo_title);
+
+    $seo_keyword = trim($_POST['seo_key']);
+    $seo_keyword = mysqli_real_escape_string($sql, $seo_keyword);
+    $seo_keyword = htmlentities($seo_keyword);
+
+    $seo_desc = trim($_POST['seo_desc']);
+    $seo_desc = mysqli_real_escape_string($sql, $seo_desc);
+    $seo_desc = htmlentities($seo_desc);
+
+    $location_link = trim($_POST['location_link']);
+    $location_link = mysqli_real_escape_string($sql, $location_link);
+    $location_link = htmlentities($location_link);
+
+    $video_link = trim($_POST['video_link']);
+    $video_link = mysqli_real_escape_string($sql, $video_link);
+    $video_link = htmlentities($video_link);
+
+    $rules = trim($_POST['rules']);
+    $rules = mysqli_real_escape_string($sql, $rules);
+    $rules = htmlentities($rules);
+
+    $security = trim($_POST['security']);
+    $security = mysqli_real_escape_string($sql, $security);
+    $security = htmlentities($security);
+
+    $policies = trim($_POST['policies']);
+    $policies = mysqli_real_escape_string($sql, $policies);
+    $policies = htmlentities($policies);
+
+
+    $shortdesc = trim($_POST['shortdesc']);
+    $shortdesc = mysqli_real_escape_string($sql, $shortdesc);
+    $shortdesc = htmlentities($shortdesc);
+
+
+    $property = trim($_POST['vendor']);
+    $property = mysqli_real_escape_string($sql, $property);
+
+    $latitude = trim($_POST['latitude']);
+    $latitude = mysqli_real_escape_string($sql, $latitude);
+
+    $longitude = trim($_POST['longitude']);
+    $longitude = mysqli_real_escape_string($sql, $longitude);
+
+    $eid = trim($_POST['eid']);
+    $eid = mysqli_real_escape_string($sql, $eid);
+
+    $upload = $_FILES['uploadimage']['name'];
+
+    if ($upload != '') {
+
+        $lastDot = strrpos($upload, ".");
+        $upload = str_replace(".", "", substr($upload, 0, $lastDot)) . substr($upload, $lastDot);
+
+        list($txt, $ext) = explode(".", $upload);
+
+        if (in_array($ext, $valid_formats)) {
+
+            $txt = str_replace(" ", "-", $txt);
+            global $upload_image;
+            $upload_image = $txt . "-" . time() . "." . $ext;
+
+            $tmp = $_FILES['uploadimage']['tmp_name'];
+            move_uploaded_file($tmp, $path . $upload_image);
+
+        } else {
+
+        }
+
+        $uploadimage = $upload_image;
+
+    } else {
+
+        $uploadimage = mysqli_real_escape_string($sql, $_POST['image']);
+
+    }
+
+
+
+    /*******************************Insert & Update**************************************/
+
+
+
+    if ($eid == '') {
+
+        //check villa code name already exist
+        $queryselect =mysqli_query($sql,"SELECT * from `addproperty` where `title` = '$title' and deleted !=1");
+        $countqueryselect = mysqli_num_rows($queryselect);
+        
+
+        if($countqueryselect>0){
+
+            echo '<script type="text/javascript">alert("Property  Villa code Name  Already Exist")</script>';
+            
+        }else{
+
+
+
+       $propertyQuery =  "INSERT INTO `addproperty` (`title`,`actualtitle`,`slug`,`state`,`city`,`address`,`h_type`,`r_type`,`minguest`, `maxguest`,`service_charge`, `nights`, `pool`, `destination`, `propcat`, `propcat_ids`,`amenities`,`villaQuantity`, `property_by`,`overview`,`seo_title`,`seo_keyword`,`seo_desc`,`location_link`,`video_link`,`rules`,`security`,`policies`,`shortdesc`,`uploadimage`,`latitude`,`longitude`,`created_date`,`created_by`,`adminApproval`) VALUES ('$title','$actualtitle','$slug','$state','$city','$address','$home_type','$room_type','$minguest','$maxguest','$serviceCharges', '$nights', '$pool', '$destination', '$propcat', '$propcat_ids','$amenities','$villaQuantity','$property','$overview','$seo_title','$seo_keyword','$seo_desc','$location_link','$video_link','$rules','$security','$policies','$shortdesc','$uploadimage','$latitude','$longitude','$cdate','1','1')";
+
+        mysqli_query($sql,$propertyQuery);
+  
+        $latest_id = mysqli_insert_id($sql);
+
+        echo '<script type="text/javascript">window.location.href="gallery.php?vid='.$latest_id .'&s=1"</script>';
+        
+        mysqli_query($sql, "INSERT INTO `awt_default_property_price` (`property_id`,`created_date`,`created_by`) VALUES ('$latest_id','$cdate','1')");
+
+        echo '<script type="text/javascript">window.location.href="gallery.php?vid='.$latest_id .'&s=1"</script>';
+
+        
+        
+        mysqli_query($sql, "INSERT INTO `awt_meal` (`v_id`,`created_date`,`created_by`) VALUES ('$latest_id','$cdate','1')");
+
+        echo '<script type="text/javascript">window.location.href="gallery.php?vid='.$latest_id .'&s=1"</script>';
+
+
+        }
+
+    } else {
+
+        //check villa code name already exist
+        $queryselect =mysqli_query($sql,"SELECT * from `addproperty` where `id` != '$eid' and `title` = '$title' and deleted !=1");
+        $countqueryselect = mysqli_num_rows($queryselect);
+
+        if($countqueryselect>0){
+
+            echo '<script type="text/javascript">alert("Property Villa code Name Already Exist")</script>';
+
+          
+            
+        }else{
+
+
+       $propertyUpdate_query = "UPDATE `addproperty` SET `propcat_ids`='$propcat_ids',`title`='$title',`actualtitle`='$actualtitle',`slug`='$slug',`state`='$state',`city`='$city',`address`='$address',`h_type`='$home_type',`r_type`='$room_type',  `minguest`='$minguest',`maxguest`='$maxguest',`service_charge`='$serviceCharges', `nights`='$nights', `pool`='$pool', `destination`='$destination', `propcat`='$propcat', `amenities`='$amenities',`villaQuantity`='$villaQuantity', `property_by`='$property',`overview`='$overview',`seo_title`='$seo_title',`seo_keyword`='$seo_keyword',`seo_desc`='$seo_desc',`location_link`='$location_link',`video_link`='$video_link',`rules`='$rules',`security`='$security',`policies`='$policies',`shortdesc`='$shortdesc',`uploadimage`='$uploadimage',`latitude`='$latitude',`longitude`='$longitude',`updated_by`='1',`updated_date`='$cdate',`adminApproval`='1' WHERE id = '$eid'";
+
+
+       mysqli_query($sql,$propertyUpdate_query );
+
+       echo '<script type="text/javascript">window.location.href="manage_listing_1.php?u=1"</script>';
+        }
+    }
+
+
+
+    /**************APPROVAL Json**************/
+
+
+		$query_json = mysqli_query($sql, "SELECT a.*,c.city as cityname,s.name as statename,h.home as homename,r.room as roomname,p.pool as poolname,n.night as nightname,d.title as destinationname,d.slug as destinationslug
+		FROM `addproperty` as a 
+		left join `home_master` as h on h.id=a.h_type 
+		left join `room_master` as r on r.id=a.r_type
+		left join `pool_master` as p on p.id=a.pool
+		left join `night_master` as n on n.id=a.nights
+		left join `destination_master` as d on d.id=a.destination
+		left join `city_master` as c on c.id=a.city
+		left join `awt_states` as s on s.id=a.state
+		WHERE a.deleted != '1' and a.adminApproval='1' and a.villaStatus = '0'");
+	
+	
+		$array_data = array();
+	
+		while ($getdata_json = mysqli_fetch_object($query_json)) {
+	
+			$master_data = array(
+				'id' => $getdata_json->id,
+				'title' => $getdata_json->title,
+                'actualtitle' => $getdata_json->actualtitle,
+				'slug' => $getdata_json->slug,
+				'sale_status' => $getdata_json->sale_status,
+				'adminApproval' => $getdata_json->adminApproval,
+                'propcat_ids' => $getdata_json->propcat_ids,
+				'state' => $getdata_json->statename,
+				'city' => $getdata_json->cityname,
+				'address' => $getdata_json->address,
+				'home_type' => $getdata_json->homename,
+				'room_type' => $getdata_json->roomname,
+				'minguest' => $getdata_json->minguest,
+				'maxguest' => $getdata_json->maxguest,
+				'nights' => $getdata_json->nightname,
+				'destination' => $getdata_json->destinationname,
+                'destinationslug' => $getdata_json->destinationslug,
+				'destinationid' => $getdata_json->destination,
+				'propcat' => $getdata_json->propcat,
+				'amenities' => $getdata_json->amenities,
+				'pool' => $getdata_json->poolname,
+				'villaQuantity'=>$getdata_json->villaQuantity,
+				'project_status' => $getdata_json->project_status,
+				'property_by' => $getdata_json->property_by,
+				'overview' => $getdata_json->overview,
+				'seo_title' => $getdata_json->seo_title,
+				'seo_keyword' => $getdata_json->seo_keyword,
+				'seo_desc' => $getdata_json->seo_desc,
+				'location_link' => $getdata_json->location_link,
+				'rules' => $getdata_json->rules,
+				'security' => $getdata_json->security,
+				'policies' => $getdata_json->policies,
+				'shortdesc' => $getdata_json->shortdesc,
+				'image' => $getdata_json->uploadimage,
+				'latitude' => $getdata_json->latitude,
+				'longitude' => $getdata_json->longitude,
+			);
+			$array_data[] = $master_data;
+	
+			$final_data = json_encode($array_data);
+	
+			if (!file_exists('../json/approveProperty')) {
+				mkdir('../json/approveProperty', 0777, true);
+			}
+	
+			file_put_contents('../json/approveProperty/approveProperty.json', $final_data);
+		}
+
+
+
+}
+
+if (isset($_GET['s'])) {
+
+    $alertMessage = '<div class="alert alert-success mt-2 fadediv" role="alert">Data Inserted Successfully</div>';
+
+}
+if (isset($_GET['u'])) {
+
+    $alertMessage = '<div class="alert alert-success mt-2 fadediv" role="alert">Data updated Successfully</div>';
+
+}
+
+
+
+
+
+/*********************************  Edit ***************************************/
+
+if (isset($_GET['eid'])) {
+
+    $eid = trim($_GET['eid']);
+    $eid = mysqli_real_escape_string($sql, $eid);
+
+    $selectdata = mysqli_query($sql, "SELECT * FROM `addproperty` WHERE `id` = '$eid'");
+    $getdata = mysqli_fetch_object($selectdata);
+
+
+
+
+    $vendor = $getdata->property_by;
+    $nights = $getdata->nights;
+    $pool = $getdata->pool;
+    $destination = $getdata->destination;
+    $propcat = $getdata->propcat;
+    $amenities = $getdata->amenities;
+    $villaQuantity = $getdata->villaQuantity;
+    $title = $getdata->title;
+    $actualtitle = $getdata->actualtitle;
+    $slug = $getdata->slug;
+    $state = $getdata->state;
+    $city = $getdata->city;
+    $address = $getdata->address;
+    $h_type = $getdata->h_type;
+    $r_type = $getdata->r_type;
+    $minguest = $getdata->minguest;
+    $maxguest = $getdata->maxguest;
+    $serviceCharges = $getdata->service_charge;
+    $nightname = $getdata->nights;
+    $poolname = $getdata->pool;
+    $destinationname = $getdata->destination;
+    $prop_cat = $getdata->propcat;
+    $amenities_name = $getdata->amenities;
+    $property_by = $getdata->property_by;
+    $overview = $getdata->overview;
+    $seo_title = $getdata->seo_title;
+    $seo_keyword = $getdata->seo_keyword;
+    $seo_desc = $getdata->seo_desc;
+    $location_link = $getdata->location_link;
+    $video_link = $getdata->video_link;
+    $rules = $getdata->rules;
+    $security = $getdata->security;
+    $policies = $getdata->policies;
+    $shortdesc = $getdata->shortdesc;
+    $uploadimage = $getdata->uploadimage;
+    $image = $uploadimage;
+    $latitude = $getdata->latitude;
+    $longitude = $getdata->longitude;
+    $eid = $getdata->id;
+
+}
+
+
+/***********************************Functions***************************************/
+function vendor($sql, $vendors)
+{
+
+    $query6 = mysqli_query($sql, "SELECT * FROM `vendor_master` WHERE `deleted` != 1");
+
+    while ($listdata = mysqli_fetch_object($query6)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $vendors) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->name . '</option>';
+
+    }
+
+}
+
+function states($sql, $state)
+{
+
+    $query2 = mysqli_query($sql, "SELECT * FROM `awt_states` ");
+
+    while ($listdata = mysqli_fetch_object($query2)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $state) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->name . '</option>';
+
+    }
+
+}
+
+function city($sql, $state, $city)
+{
+
+    $query3 = mysqli_query($sql, "SELECT * FROM `city_master` WHERE `state`='$state' and deleted != 1");
+
+    while ($listdata = mysqli_fetch_object($query3)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $city) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->city . '</option>';
+
+    }
+
+}
+
+
+function room($sql, $room)
+{
+
+    $query5 = mysqli_query($sql, "SELECT * FROM `room_master` WHERE `deleted` != 1");
+
+    while ($listdata = mysqli_fetch_object($query5)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $room) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->room . '</option>';
+
+    }
+
+}
+
+function home($sql, $home)
+{
+
+    $query4 = mysqli_query($sql, "SELECT * FROM `home_master` WHERE `deleted` != 1");
+
+    while ($listdata = mysqli_fetch_object($query4)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $home) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->home . '</option>';
+
+    }
+
+}
+
+
+function guest($sql, $guestname)
+{
+
+    $query2 = mysqli_query($sql, "SELECT * FROM `guest_master` where `deleted` != 1");
+
+    while ($listdata = mysqli_fetch_object($query2)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $guestname) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->guest . '</option>';
+
+    }
+
+}
+
+function night($sql, $nightname)
+{
+
+    $query2 = mysqli_query($sql, "SELECT * FROM `night_master`  where `deleted` != 1");
+
+    while ($listdata = mysqli_fetch_object($query2)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $nightname) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->night . '</option>';
+
+    }
+
+}
+
+function pool($sql, $poolname)
+{
+
+    $query2 = mysqli_query($sql, "SELECT * FROM `pool_master` where `deleted` != 1");
+
+    while ($listdata = mysqli_fetch_object($query2)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $poolname) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->pool . '</option>';
+
+    }
+
+}
+
+function destination($sql, $destinationname)
+{
+
+    $query2 = mysqli_query($sql, "SELECT * FROM `destination_master` where `deleted` != 1");
+
+    while ($listdata = mysqli_fetch_object($query2)) {
+
+        echo '<option value="' . $listdata->id . '"';
+        if ($listdata->id == $destinationname) {
+            echo ' selected="selected" ';
+        }
+        echo '>' . $listdata->title . '</option>';
+
+    }
+
+}
+
+
+function property_category($sql, $prop_cat)
+{
+
+    
+
+    if ($prop_cat != '') {
+        $colnamearray = array();
+        $colnamearray = explode(',', $prop_cat);
+    } else {
+        $colnamearray = '';
+    }
+
+    $query2 = "SELECT * FROM `awt_filters` WHERE `deleted` != 1";
+    $query_run = mysqli_query($sql, $query2);
+
+    if (mysqli_num_rows($query_run) > 0) {
+        foreach ($query_run as $row) {
+            echo '<option value="' . $row['title'] . '"';
+            if($colnamearray != ''){
+              if (in_array($row['title'], $colnamearray)) {
+                echo 'selected="selected"';
+              }
+            }
+            echo '>' . $row['title'] . '</option>';
+        }
+    } else {
+        echo '<option value="">No Record Found</option>';
+    }
+
+
+}
+
+
+function amenitiesname($sql, $amenities_name)
+{
+
+    
+    if ($amenities_name != '') {
+        $colnamearray = array();
+        $colnamearray = explode(',', $amenities_name);
+    } else {
+        $colnamearray = '';
+    }
+
+    $query2 = "SELECT * FROM `awt_facilities` WHERE `deleted` != 1";
+    $query_run = mysqli_query($sql, $query2);
+
+    if (mysqli_num_rows($query_run) > 0) {
+        foreach ($query_run as $row) {
+            echo '<option value="' . $row['title'] . '"';
+            if($colnamearray != ''){
+                if (in_array($row['title'], $colnamearray)) {
+                    echo 'selected="selected"';
+                }
+            }
+            echo '>' . $row['title'] . '</option>';
+        }
+    } else {
+        echo '<option value="">No Record Found</option>';
+    }
+
+}
+
+/***************************  Delete **************************/
+
+
+if (isset($_GET['did'])) {
+    $did = trim($_GET['did']);
+    $did = mysqli_real_escape_string($sql, $did);
+
+    mysqli_query($sql, "UPDATE `addproperty` SET `deleted`='1',`updated_date`='$cdate',`updated_by`='1' WHERE `id`='$did'");
+
+    echo '<script type="text/javascript">window.location.href="manage_listing_1.php?d=1"</script>';
+
+
+    /**************APPROVAL Json**************/
+
+
+		$query_json = mysqli_query($sql, "SELECT a.*,c.city as cityname,s.name as statename,h.home as homename,r.room as roomname,p.pool as poolname,n.night as nightname,d.title as destinationname,d.slug as destinationslug
+		FROM `addproperty` as a 
+		left join `home_master` as h on h.id=a.h_type 
+		left join `room_master` as r on r.id=a.r_type
+		left join `pool_master` as p on p.id=a.pool
+		left join `night_master` as n on n.id=a.nights
+		left join `destination_master` as d on d.id=a.destination
+		left join `city_master` as c on c.id=a.city
+		left join `awt_states` as s on s.id=a.state
+		WHERE a.deleted != '1' and a.adminApproval='1' and a.villaStatus = '0'");
+	
+	
+		$array_data = array();
+	
+		while ($getdata_json = mysqli_fetch_object($query_json)) {
+	
+			$master_data = array(
+				'id' => $getdata_json->id,
+				'title' => $getdata_json->title,
+                'actualtitle' => $getdata_json->actualtitle,
+				'slug' => $getdata_json->slug,
+				'sale_status' => $getdata_json->sale_status,
+				'adminApproval' => $getdata_json->adminApproval,
+				'state' => $getdata_json->statename,
+				'city' => $getdata_json->cityname,
+				'address' => $getdata_json->address,
+				'home_type' => $getdata_json->homename,
+				'room_type' => $getdata_json->roomname,
+				'minguest' => $getdata_json->minguest,
+				'maxguest' => $getdata_json->maxguest,
+				'nights' => $getdata_json->nightname,
+				'destination' => $getdata_json->destinationname,
+                'destinationslug' => $getdata_json->destinationslug,
+				'destinationid' => $getdata_json->destination,
+				'propcat' => $getdata_json->propcat,
+                'propcat_ids' => $getdata_json->propcat_ids,
+				'amenities' => $getdata_json->amenities,
+				'pool' => $getdata_json->poolname,
+				'villaQuantity'=>$getdata_json->villaQuantity,
+				'project_status' => $getdata_json->project_status,
+				'property_by' => $getdata_json->property_by,
+				'overview' => $getdata_json->overview,
+				'seo_title' => $getdata_json->seo_title,
+				'seo_keyword' => $getdata_json->seo_keyword,
+				'seo_desc' => $getdata_json->seo_desc,
+				'location_link' => $getdata_json->location_link,
+				'rules' => $getdata_json->rules,
+				'security' => $getdata_json->security,
+				'policies' => $getdata_json->policies,
+				'shortdesc' => $getdata_json->shortdesc,
+				'image' => $getdata_json->uploadimage,
+				'latitude' => $getdata_json->latitude,
+				'longitude' => $getdata_json->longitude,
+			);
+			$array_data[] = $master_data;
+	
+			$final_data = json_encode($array_data);
+	
+			if (!file_exists('../json/approveProperty')) {
+				mkdir('../json/approveProperty', 0777, true);
+			}
+	
+			file_put_contents('../json/approveProperty/approveProperty.json', $final_data);
+		}
+
+
+
+}
+
+if (isset($_GET['d'])) {
+
+    $alertMessage = '<div class="alert alert-success mt-2 fadediv" role="alert">Data Deleted Successfully</div>';
+}
+
+
+/********************************  Query *********************************/
+
+
+
+
+
+/*$query = mysqli_query($sql, "SELECT a.*, r.room, v.name as vendorname, d.title as titlename, s.name, c.city as cityname 
+                        from `addproperty` as a 
+                        left Join `room_master` as r on r.id = a.r_type 
+                        left Join `vendor_master` as v on v.id = a.property_by 
+                        left Join `destination_master` as d on d.id = a.destination 
+                        left Join `awt_states` as s on s.id = a.state 
+                        left Join `city_master` as c on c.id = a.city 
+                        where a.deleted != 1 and a.villaStatus = 0 and a.adminapproval =1 order by created_date desc");
+
+$count = mysqli_num_rows($query);*/
+
+/*$makequery = "SELECT a.*, r.room, v.name as vendorname, d.title as titlename, s.name, c.city as cityname 
+from `addproperty` as a 
+left Join `room_master` as r on r.id = a.r_type 
+left Join `vendor_master` as v on v.id = a.property_by 
+left Join `destination_master` as d on d.id = a.destination 
+left Join `awt_states` as s on s.id = a.state 
+left Join `city_master` as c on c.id = a.city 
+where a.deleted != 1 and a.adminapproval =1 and a.villaStatus != 1";*/
+
+$makequery = "SELECT a.*, r.room, v.name as vendorname, d.title as titlename, s.name, c.city as cityname 
+from `addproperty` as a 
+left Join `room_master` as r on r.id = a.r_type 
+left Join `vendor_master` as v on v.id = a.property_by 
+left Join `destination_master` as d on d.id = a.destination 
+left Join `awt_states` as s on s.id = a.state 
+left Join `city_master` as c on c.id = a.city 
+where a.deleted != 1 and a.adminapproval =1 ";
+
+if($search_vendorname!=''){$makequery.=" and v.name like '%$search_vendorname%'";}
+if($search_destination!=''){$makequery.=" and d.title like '%$search_destination%'";}
+if($search_offer!=''){$makequery.=" and a.sale_status = '$search_offer'";}
+if($search_state!=''){$makequery.=" and s.id = '$search_state'";}
+if($search_city!=''){$makequery.=" and c.id = '$search_city'";}
+if($search_disable!=''){$makequery.=" and a.villaStatus = '$search_disable'";}
+
+$makequery.= "  order by created_date desc";
+
+//echo $makequery;
+$query = mysqli_query($sql,$makequery);
+$count = mysqli_num_rows($query);
+
+
+
+?>

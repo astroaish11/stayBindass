@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* CSS Document */
+.status label{
+  font-size: 10px;
+  padding: 5px;
+  line-height: 16px;
+}
+
+.text-center {
+	text-align:center;
+}
+
+.topTitle{
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 1.5rem 1.25rem;
+  z-index: 1000;
+  position: relative;
+  font-size: 1.25rem;
+  line-height: 1.5715;
+  margin-bottom:0;
+  font-weight: 500;
+  color: #333;
+}
+
+.topTitle span{
+	font-weight: 300;
+}
+
+.breadcrumb {
+  border-radius: 0;
+  font-size: .875rem;
+  padding-left: 1.25rem;
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
+  color:#999;
+}
+
+.breadcrumb svg {
+	color:#333;
+}
+
+.breadcrumb a{
+	color:#333;
+  
+}
+
+
+
+.copad {
+	margin-left: 0.875em;
+}
+
+.btn-icon-split {
+	color:#333;
+}
+
+.forminput {
+position: relative;
+}
+
+.errordiv {
+  position:absolute;
+  font-size: 12px;
+}
+
+.login {
+margin: auto;
+background-color:aquamarine;
+}
+.text-center img{
+  width: 5px;
+  height: 5px;
+}
+
+fieldset{
+  border:1px solid rgb(36, 34, 34) ;
+  width:100%;
+  padding: 10px;
+  margin: 5px;
+}
+
+.box-body .myTable{
+  table-layout:fixed;
+   width:100%;
+}
+
+/* .sticky-footer{
+  position: fixed;
+  
+  bottom: 0;
+  width: 100%; 
+
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

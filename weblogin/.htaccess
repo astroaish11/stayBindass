@@ -1,0 +1,25 @@
+<IfModule deflate_module>
+    # Enable compression for the following file types.
+    AddOutputFilterByType            \
+     DEFLATE                         \
+      application/javascript         \
+      text/css                       \
+      text/html                      \
+      text/javascript                \
+      text/plain                     \
+      text/xml
+</IfModule>
+
+RewriteEngine on 
+DirectoryIndex index.php
+
+RewriteBase /
+
+RewriteRule ^home index.php
+
+
+RewriteCond %{HTTPS} off
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+

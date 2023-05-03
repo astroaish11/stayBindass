@@ -1,0 +1,27 @@
+.panel {
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+  box-shadow: 1px 1px 5px #e3e6f0;
+}
+.panel-body {
+  box-sizing: border-box;
+  padding: 15px;
+  color: #828690;
+}
+.total-payouts {
+  font-weight: bold;
+}
+.text-20 {
+  font-size: 20px;
+}
+
+.specificText{
+    font-weight: 400; 
+}
+
+.total_US_amount{
+    font-weight: 900 !important; 
+}
+
